@@ -16,12 +16,16 @@ iss.penup()
 
 def tracker():
     while True:
-        location = ISS_Info.iss_current_loc()
-        lat = location['iss_position']['latitude']
-        lon = location['iss_position']['longitude']
-        screen.title("ISS TRACKER: (Latitude: {},  Longitude: {})".format(lat,lon))
-        iss.goto(float(lon),float(lat))
-        time.sleep(5)
+        try:
+            location = ISS_Info.iss_current_loc()
+            lat = location['iss_position']['latitude']
+            lon = location['iss_position']['longitude']
+            screen.title("ISS TRACKER: (Latitude: {},  Longitude: {})".format(lat,lon))
+            iss.goto(float(lon),float(lat))
+            time.sleep(5)
+        except Exception as e:
+            print(str(e))
+            break
 
 t = threading.Thread(target=tracker())
 t.start()
